@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>D&D Dice Roller</title>
+        <style>
+            /* put CSS here */
+            #rollBtn {
+                padding: 3px;
+                margin: 10px 0;
+                background-color: cyan;
+                border: 3px solid black;
+                width: 200px;
+                display: block;
+            }
+
+            #dieType {
+                padding: 2px;
+                background-color: cyan;
+                border: 3px solid black;
+                width: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <input type="number" id="numDice" placeholder="Number of dice" value="1" min="1">
+        <select id="dieType">
+            <option class="opt" value="4">d4</option>
+            <option class="opt" value="6">d6</option>
+            <option class="opt" value="8">d8</option>
+            <option class="opt" value="10">d10</option>
+            <option class="opt" value="12">d12</option>
+            <option class="opt" value="20">d20</option>
+        </select>
+        <button id="rollBtn">Roll</button>
+        <h3 id="txt">Click Roll to roll dice</h3>
+
+       
+        <h3>Roll Log:</h4>
+        <button id="clearLog">Clear Log</button>
+        <div id="rollLog"> </div>
+        
+        <script>
+            const rollBtn = document.getElementById("rollBtn");
+            const clearLog = document.getElementById("clearLog");
+            const logDiv = document.getElementById("rollLog");
+            const txt = document.getElementById("txt");
+
+            function rollDie(sides) {
+                return Math.floor(Math.random() * sides) + 1;
+                
+               
+            }
+            
+            rollBtn.addEventListener("click", () => {
+                const numDice = parseInt(document.getElementById("numDice").value);
+                const sides = parseInt(document.getElementById("dieType").value);
+                
+                const rolls = [];
+                for (let i = 0; i < numDice; i++) {
+                    rolls.push(rollDie(sides));
+                }
+
+                const total = rolls.reduce((a,b)=>a+b,0);
+
+                 txt.innerText = `You rolled a ${rolls.join(", ")} (Total: ${total})`;
+
+                const newLog = document.createElement("h4");
+                newLog.innerText = `${total}`;
+                logDiv.appendChild(newLog);
+            });
+
+            clearLog.addEventListener("click", () => {
+                logDiv.innerHTML = "";
+            });
+        </script>
+    </body>
+</html>
