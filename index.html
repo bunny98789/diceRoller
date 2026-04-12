@@ -19,9 +19,15 @@
                 border: 3px solid black;
                 width: 50px;
             }
+            
+            #hpt {
+                display: block;
+            }
         </style>
     </head>
     <body>
+         <a id="hpt" href="https://bunny98789.github.io/DnD-Hp-tracker/
+">Dnd HP tracker (work in progress, may be buggy)</a>
         <input type="number" id="numDice" placeholder="Number of dice" value="1" min="1">
         <select id="dieType">
             <option  value="4">d4</option>
@@ -32,8 +38,11 @@
             <option  value="20">d20</option>
             <option  value="100">d100</option>
         </select>
+
+        <input id="mod" placeholder="Modifier (e.g., 1d12 + 5, the 5 is the modifier)">
         <button id="rollBtn">Roll</button>
         <h3 id="txt">Click Roll to roll dice</h3>
+
 
         <button id="clearLog">Clear Log</button>
         <h3>Roll Log:</h3>
@@ -41,6 +50,7 @@
         
         <script>
             const rollBtn = document.getElementById("rollBtn");
+          
             const clearLog = document.getElementById("clearLog");
             const logDiv = document.getElementById("rollLog");
             const txt = document.getElementById("txt");
@@ -54,13 +64,15 @@
             rollBtn.addEventListener("click", () => {
                 const numDice = parseInt(document.getElementById("numDice").value);
                 const sides = parseInt(document.getElementById("dieType").value);
+                let modifier = parseInt(document.getElementById("mod").value);
+                if (Number.isNaN(modifier)) modifier = 0;
                 
                 const rolls = [];
                 for (let i = 0; i < numDice; i++) {
                     rolls.push(rollDie(sides));
                 }
 
-                const total = rolls.reduce((a,b)=>a+b,0);
+                const total = rolls.reduce((a,b)=>a+b,0) + modifier;
 
                  txt.innerText = `You rolled a ${rolls.join(", ")} (Total: ${total})`;
 
