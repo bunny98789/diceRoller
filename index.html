@@ -63,6 +63,10 @@
             
             rollBtn.addEventListener("click", () => {
                 const numDice = parseInt(document.getElementById("numDice").value);
+                if (numDice === 0) {
+                    alert("No dice rolled!");
+                    return;
+                }
                 const sides = parseInt(document.getElementById("dieType").value);
                 let modifier = parseInt(document.getElementById("mod").value);
                 if (Number.isNaN(modifier)) modifier = 0;
